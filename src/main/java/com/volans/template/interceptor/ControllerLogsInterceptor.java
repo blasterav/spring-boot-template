@@ -18,7 +18,7 @@ public class ControllerLogsInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         Instant instant = Instant.now();
         long startTime = instant.toEpochMilli();
-        LOG.info("Started {} {}", request.getMethod(), request.getServletPath());
+        LOG.info("Started {} {}", request.getMethod(), request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern"));
         request.setAttribute("startTime", startTime);
         return true;
     }
@@ -26,7 +26,7 @@ public class ControllerLogsInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         long startTime = (Long) request.getAttribute("startTime");
-        LOG.info("Finished {} {}, Status: {}, Duration: {}", request.getMethod(), request.getServletPath(), response.getStatus(), (Instant.now().toEpochMilli() - startTime));
+        LOG.info("Finished {} {}, Status: {}, Duration: {}", request.getMethod(), request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern"), response.getStatus(), (Instant.now().toEpochMilli() - startTime));
     }
 
 }

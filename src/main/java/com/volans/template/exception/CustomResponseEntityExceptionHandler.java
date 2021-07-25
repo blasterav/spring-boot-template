@@ -23,23 +23,22 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
     @ExceptionHandler(InvalidRequestException.class)
     public ResponseEntity<Response<?>> handleInvalidRequestException(InvalidRequestException e, HttpServletRequest request) {
-        LOG.error("Failed {} {}: {}", request.getMethod(), request.getServletPath(), e.getStatus().getDesc());
+        Object servletPath = request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern");
+        LOG.error("Failed {} {}: {}", request.getMethod(), servletPath, e.getStatus().getDesc());
         return new ResponseEntity<>(new Response<>(new Status(e.getStatus()), null), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Response<?>> handleNotFoundException(NotFoundException e, HttpServletRequest request) {
-        LOG.error("Failed {} {}: {}", request.getMethod(), request.getServletPath(), e.getStatus().getDesc());
+        Object servletPath = request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern");
+        LOG.error("Failed {} {}: {}", request.getMethod(), servletPath, e.getStatus().getDesc());
         return new ResponseEntity<>(new Response<>(new Status(e.getStatus()), null), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<Response<?>> handleServiceException(ServiceException e, HttpServletRequest request) {
-        if (request == null || request.getMethod() == null && request.getServletPath() == null) {
-            LOG.error("ServiceException: {}", e.getStatus().getDesc());
-        } else {
-            LOG.error("Failed {} {}: {}", request.getMethod(), request.getServletPath(), e.getStatus().getDesc());
-        }
+        Object servletPath = request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern");
+        LOG.error("Failed {} {}: {}", request.getMethod(), servletPath, e.getStatus().getDesc());
         return new ResponseEntity<>(new Response<>(new Status(e.getStatus()), null), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -49,7 +48,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
             ServiceException serviceException = (ServiceException) e.getCause();
             return this.handleServiceException(serviceException, request);
         }
-        LOG.error("Failed: {}", e.getMessage());
+        Object servletPath = request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern");
+        LOG.error("Failed {} {}: {}", request.getMethod(), servletPath, e.getMessage());
         return new ResponseEntity<>(new Response<>(new Status(HttpConstants.INTERNAL_SERVER_ERROR), null), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -59,13 +59,15 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
             InvalidRequestException invalidRequestException = (InvalidRequestException) e.getCause();
             return this.handleInvalidRequestException(invalidRequestException, request);
         }
-        LOG.error("Failed: {}", e.getMessage());
+        Object servletPath = request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern");
+        LOG.error("Failed {} {}: {}", request.getMethod(), servletPath, e.getMessage());
         return new ResponseEntity<>(new Response<>(new Status(HttpConstants.INTERNAL_SERVER_ERROR), null), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response<?>> handleException(Exception e, HttpServletRequest request) {
-        LOG.error("Failed: {}", e.getMessage());
+        Object servletPath = request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern");
+        LOG.error("Failed {} {}: {}", request.getMethod(), servletPath, e.getMessage());
         return new ResponseEntity<>(new Response<>(new Status(HttpConstants.INTERNAL_SERVER_ERROR), null), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
