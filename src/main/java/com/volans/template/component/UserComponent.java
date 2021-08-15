@@ -60,12 +60,12 @@ public class UserComponent {
         if (request.getAge() != null) {
             userCommand.setAge(request.getAge());
         }
-        if (StringUtils.isNotBlank(request.getMobileNumber())) {
-            userCommand.getMobile().setMobileNumber(request.getMobileNumber());
-        }
-        if (StringUtils.isNotBlank(request.getMobileBrand())) {
-            userCommand.getMobile().setMobileBrand(request.getMobileBrand());
-        }
+//        if (StringUtils.isNotBlank(request.getMobileNumber())) {
+//            userCommand.getMobile().setMobileNumber(request.getMobileNumber());
+//        }
+//        if (StringUtils.isNotBlank(request.getMobileBrand())) {
+//            userCommand.getMobile().setMobileBrand(request.getMobileBrand());
+//        }
         userPersistenceService.save(userCommand);
         return userCommand;
     }

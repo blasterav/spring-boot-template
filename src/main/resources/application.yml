@@ -1,3 +1,16 @@
-server:
-  servlet:
-    context-path: /template
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://host.docker.internal:3306/test?useUnicode=yes&characterEncoding=UTF-8
+#    url: jdbc:mysql://localhost:3306/test?useUnicode=yes&characterEncoding=UTF-8
+    username: root
+    password: Thebreaker
+    hikari:
+      connection-timeout: 10000
+      idle-timeout: 90000
+      max-lifetime: 1800000
+      minimum-idle: 4
+      maximum-pool-size: 20
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5Dialect

@@ -35,7 +35,7 @@ public class UserController implements BaseController {
         return success(response);
     }
 
-    @PutMapping(path = "/v1/users/{id}")
+    @PatchMapping(path = "/v1/users/{id}")
     @ApiOperation(value = "Update user")
     public Response<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest request) {
         UserCommand userCommand = userComponent.updateUser(id, request);

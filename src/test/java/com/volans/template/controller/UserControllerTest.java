@@ -684,7 +684,7 @@ class UserControllerTest {
         Mockito.when(userComponent.updateUser(Mockito.eq(1L), Mockito.any(UpdateUserRequest.class)))
                 .thenReturn(userCommand);
 
-        MockHttpServletResponse response = mockMvc.perform(put("/v1/users/1")
+        MockHttpServletResponse response = mockMvc.perform(patch("/v1/users/1")
                 .content(objectMapper.writeValueAsString(actualRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -730,7 +730,7 @@ class UserControllerTest {
         Mockito.when(userComponent.updateUser(Mockito.eq(1L), Mockito.any(UpdateUserRequest.class)))
                 .thenThrow(new ServiceException(HttpConstants.FAILED_TO_CONVERT_VALUE_TO_ENUM));
 
-        MockHttpServletResponse response = mockMvc.perform(put("/v1/users/1")
+        MockHttpServletResponse response = mockMvc.perform(patch("/v1/users/1")
                 .content(objectMapper.writeValueAsString(actualRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
@@ -767,7 +767,7 @@ class UserControllerTest {
         Mockito.when(userComponent.updateUser(Mockito.eq(1L), Mockito.any(UpdateUserRequest.class)))
                 .thenThrow(new RuntimeException());
 
-        MockHttpServletResponse response = mockMvc.perform(put("/v1/users/1")
+        MockHttpServletResponse response = mockMvc.perform(patch("/v1/users/1")
                 .content(objectMapper.writeValueAsString(actualRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
@@ -801,7 +801,7 @@ class UserControllerTest {
                 .setMobileNumber("12345678901")
                 .setMobileBrand("Apple");
 
-        MockHttpServletResponse response = mockMvc.perform(put("/v1/users/1")
+        MockHttpServletResponse response = mockMvc.perform(patch("/v1/users/1")
                 .content(objectMapper.writeValueAsString(actualRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -835,7 +835,7 @@ class UserControllerTest {
                 .setMobileNumber("12345678901")
                 .setMobileBrand("Apple");
 
-        MockHttpServletResponse response = mockMvc.perform(put("/v1/users/1")
+        MockHttpServletResponse response = mockMvc.perform(patch("/v1/users/1")
                 .content(objectMapper.writeValueAsString(actualRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -869,7 +869,7 @@ class UserControllerTest {
                 .setMobileNumber("12345678901")
                 .setMobileBrand("Apple");
 
-        MockHttpServletResponse response = mockMvc.perform(put("/v1/users/1")
+        MockHttpServletResponse response = mockMvc.perform(patch("/v1/users/1")
                 .content(objectMapper.writeValueAsString(actualRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -903,7 +903,7 @@ class UserControllerTest {
                 .setMobileNumber("12345678901")
                 .setMobileBrand("Apple");
 
-        MockHttpServletResponse response = mockMvc.perform(put("/v1/users/1")
+        MockHttpServletResponse response = mockMvc.perform(patch("/v1/users/1")
                 .content(objectMapper.writeValueAsString(actualRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -937,7 +937,7 @@ class UserControllerTest {
                 .setMobileNumber("12345678901")
                 .setMobileBrand("Apple");
 
-        MockHttpServletResponse response = mockMvc.perform(put("/v1/users/1")
+        MockHttpServletResponse response = mockMvc.perform(patch("/v1/users/1")
                 .content(objectMapper.writeValueAsString(actualRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
